@@ -14,7 +14,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'widgets.dart';
 import 'utils.dart';
 
-final List<String> imgList = [
+final List<String> imgList = [ 
   'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/apple/Image_1.jpg',
   'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/apple/Image_2.jpg',
   'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/apple/Image_3.jpg',
