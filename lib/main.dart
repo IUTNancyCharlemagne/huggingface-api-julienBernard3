@@ -19,7 +19,7 @@ final List<String> listPommes = [
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_1.jpg',
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_2.jpg',
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_7.jpg',
-  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_10.jpg'
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_8.jpg'
 ];
 
 final List<String> listBananes = [
