@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/CustomIcon.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -14,31 +15,46 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'widgets.dart';
 import 'utils.dart';
 
-final List<String> imgList = [ 
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/apple/Image_1.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/apple/Image_2.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/apple/Image_3.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/apple/Image_7.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/banana/Image_1.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/banana/Image_5.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/banana/Image_3.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/banana/Image_4.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/kiwi/Image_1.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/kiwi/Image_2.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/kiwi/Image_3.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/kiwi/Image_4.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/mango/Image_1.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/mango/Image_2.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/mango/Image_3.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/mango/Image_4.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/strawberry/Image_1.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/strawberry/Image_2.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/strawberry/Image_3.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/strawberry/Image_4.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/pineapple/Image_1.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/pineapple/Image_2.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/pineapple/Image_3.jpg',
-  'https://raw.githubusercontent.com/julienBernard3/flutter_application_HuggingFace/main/sample_images/pineapple/Image_4.jpg'
+final List<String> listPommes = [
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_1.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_2.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_7.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_10.jpg'
+];
+
+final List<String> listBananes = [
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_1.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_5.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_3.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_4.jpg'
+];
+
+final List<String> listKiwis = [
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/kiwi/Image_1.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/kiwi/Image_2.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/kiwi/Image_3.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/kiwi/Image_4.jpg'
+];
+
+final List<String> listMangues = [
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/mango/Image_1.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/mango/Image_2.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/mango/Image_3.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/mango/Image_4.jpg'
+];
+
+final List<String> listFraises = [
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/strawberry/Image_1.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/strawberry/Image_2.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/strawberry/Image_3.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/strawberry/Image_4.jpg'
+];
+
+final List<String> listAnanas = [
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/pineapple/Image_1.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/pineapple/Image_2.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/pineapple/Image_3.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/pineapple/Image_4.jpg'
 ];
 
 void main() {
@@ -176,70 +192,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> imageSliders = imgList
-        .map((item) => Container(
-              margin: const EdgeInsets.all(5.0),
-              child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                  child: Stack(
-                    children: <Widget>[
-                      GestureDetector(
-                        onTap: () async {
-                          context.loaderOverlay.show();
-
-                          String imgUrl = imgList[imgList.indexOf(item)];
-
-                          final imgFile = await getImage(imgUrl);
-
-                          setState(() {
-                            imageURI = imgFile;
-                            _btnController.stop();
-                            isClassifying = false;
-                            clearInferenceResults();
-                          });
-                          context.loaderOverlay.hide();
-                        },
-                        child: CachedNetworkImage(
-                          imageUrl: item,
-                          fit: BoxFit.fill,
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(200, 0, 0, 0),
-                                Color.fromARGB(0, 0, 0, 0)
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20.0),
-                          child: Text(
-                            'GT: ${imgList[imgList.indexOf(item)].split('/').reversed.elementAt(1)}', // get the class name from url
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )),
-            ))
-        .toList();
-
     return LoaderOverlay(
       child: Scaffold(
         drawer: Drawer(
@@ -309,69 +261,67 @@ class _MyHomePageState extends State<MyHomePage> {
                   : Row(
                       children: [
                         const Spacer(),
-                        Image.file(imageURI!, height: 200, fit: BoxFit.cover),
+                        Stack(
+                          children: [
+                            Image.file(imageURI!,
+                                height: 200, fit: BoxFit.cover),
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: CustomIcon(
+                                size: 25, // Taille du cercle
+                                onPressed: () {
+                                  setState(() {
+                                    imageURI = null;
+                                    clearInferenceResults();
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                         const Spacer(),
                       ],
                     ),
               const SizedBox(
                 height: 8,
               ),
-              Text("Top 3 predictions",
+              Text("Les 3 meilleures prédictions:",
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
               FittedBox(child: buildResultsIndicators(_resultDict)),
               const SizedBox(height: 8),
-              Text("Latency: $_latency ms",
+              Text("Latence: $_latency ms",
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
-              Text("Samples", style: Theme.of(context).textTheme.titleLarge),
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: 180,
-                  autoPlay: true,
-                  // aspectRatio: 2.5,
-                  viewportFraction: 0.4,
-                  enlargeCenterPage: false,
-                  enlargeStrategy: CenterPageEnlargeStrategy.height,
-                ),
-                items: imageSliders,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: RoundedLoadingButton(
-                  width: MediaQuery.of(context).size.width * 0.5,
-                  color: Colors.blue,
-                  successColor: Colors.green,
-                  // resetAfterDuration: true,
-                  // resetDuration: const Duration(seconds: 10),
-                  child: const Text('Classify!',
-                      style: TextStyle(color: Colors.white)),
-                  controller: _btnController,
-                  onPressed: isClassifying || imageURI == null
-                      ? null // null value disables the button
-                      : () async {
-                          isClassifying = true;
-
-                          imgBytes = imageURI!.readAsBytesSync();
-                          String base64Image = "data:image/png;base64," +
-                              base64Encode(imgBytes!);
-
-                          try {
-                            Stopwatch stopwatch = Stopwatch()..start();
-                            final result = await classifyRiceImage(base64Image);
-
-                            setState(() {
-                              _resultString = parseResultsIntoString(result);
-                              _resultDict = result;
-                              _latency =
-                                  stopwatch.elapsed.inMilliseconds.toString();
-                            });
-                            _btnController.success();
-                          } catch (e) {
-                            _btnController.error();
-                          }
-                          isClassifying = false;
+              Text("Pommes: ", style: Theme.of(context).textTheme.titleLarge),
+              buildCarouselSlider(listPommes),
+              Text("Bananes: ", style: Theme.of(context).textTheme.titleLarge),
+              buildCarouselSlider(listBananes),
+              Text("Kiwis: ", style: Theme.of(context).textTheme.titleLarge),
+              buildCarouselSlider(listKiwis),
+              Text("Mangues: ", style: Theme.of(context).textTheme.titleLarge),
+              buildCarouselSlider(listMangues),
+              Text("Fraises: ", style: Theme.of(context).textTheme.titleLarge),
+              buildCarouselSlider(listFraises),
+              Text("Ananas: ", style: Theme.of(context).textTheme.titleLarge),
+              buildCarouselSlider(listAnanas),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 12.0, horizontal: 8.0),
+                  child: FloatingActionButton.extended(
+                    label: const Text("Depuis l'appareil"),
+                    icon: const Icon(Icons.camera),
+                    onPressed: () {
+                      showModalBottomSheet<void>(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return buildModalBtmSheetItems();
                         },
+                      );
+                    },
+                  ),
                 ),
               ),
               Row(
@@ -393,22 +343,114 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Spacer(),
                 ],
               ),
+              SizedBox(height: 50),
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          label: const Text("Take picture"),
-          icon: const Icon(Icons.camera),
-          onPressed: () {
-            showModalBottomSheet<void>(
-              context: context,
-              builder: (BuildContext context) {
-                return buildModalBtmSheetItems();
-              },
-            );
-          },
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: RoundedLoadingButton(
+          width: MediaQuery.of(context).size.width * 0.5,
+          color: Colors.blue,
+          successColor: Colors.green,
+          resetAfterDuration: true,
+          resetDuration: const Duration(seconds: 10),
+          child: const Text('Prédire!', style: TextStyle(color: Colors.white)),
+          controller: _btnController,
+          onPressed: isClassifying || imageURI == null
+              ? null // null value disables the button
+              : () async {
+                  isClassifying = true;
+
+                  imgBytes = imageURI!.readAsBytesSync();
+                  String base64Image =
+                      "data:image/png;base64," + base64Encode(imgBytes!);
+
+                  try {
+                    Stopwatch stopwatch = Stopwatch()..start();
+                    final result = await classifyRiceImage(base64Image);
+
+                    setState(() {
+                      _resultString = parseResultsIntoString(result);
+                      _resultDict = result;
+                      _latency = stopwatch.elapsed.inMilliseconds.toString();
+                    });
+                    _btnController.success();
+                  } catch (e) {
+                    _btnController.error();
+                  }
+                  isClassifying = false;
+                },
         ),
       ),
+    );
+  }
+
+  CarouselSlider buildCarouselSlider(List<String> img) {
+    final List<Widget> imgList = img
+        .map((item) => Container(
+              margin: const EdgeInsets.all(5.0),
+              child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                  child: Stack(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () async {
+                          context.loaderOverlay.show();
+
+                          String imgUrl = img[img.indexOf(item)];
+
+                          final imgFile = await getImage(imgUrl);
+
+                          setState(() {
+                            imageURI = imgFile;
+                            _btnController.stop();
+                            isClassifying = false;
+                            clearInferenceResults();
+                          });
+                          context.loaderOverlay.hide();
+                        },
+                        child: CachedNetworkImage(
+                          imageUrl: item,
+                          fit: BoxFit.fill,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Container(
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color.fromARGB(200, 0, 0, 0),
+                                  Color.fromARGB(0, 0, 0, 0)
+                                ],
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 30.0, horizontal: 20.0)),
+                      ),
+                    ],
+                  )),
+            ))
+        .toList();
+
+    return CarouselSlider(
+      options: CarouselOptions(
+        height: 180,
+        autoPlay: true,
+        // aspectRatio: 2.5,
+        viewportFraction: 0.4,
+        enlargeCenterPage: false,
+        enlargeStrategy: CenterPageEnlargeStrategy.height,
+      ),
+      items: imgList,
     );
   }
 }
