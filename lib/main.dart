@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:empty_widget/empty_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/CustomIcon.dart';
+import 'package:flutter_application_1/imageHistoryPage.dart';
+import 'package:flutter_application_1/imagePrediction.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -14,6 +16,8 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'widgets.dart';
 import 'utils.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 
 final List<String> listPommes = [
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_1.jpg',
@@ -68,11 +72,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Paddy Disease Classifier',
+      title: 'Reconnaisseur de fruits',
       theme: ThemeData(
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
+        ),
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Paddy Disease Classifier'),
+      home: const MyHomePage(title: 'Reconnaisseur de fruits'),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -88,6 +95,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List<ImagePrediction> imageHistory = [];
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
 
@@ -112,6 +120,13 @@ class _MyHomePageState extends State<MyHomePage> {
     ${results['confidences'][0]['label']} - ${(results['confidences'][0]['confidence'] * 100.0).toStringAsFixed(2)}% \n
     ${results['confidences'][1]['label']} - ${(results['confidences'][1]['confidence'] * 100.0).toStringAsFixed(2)}% \n
     ${results['confidences'][2]['label']} - ${(results['confidences'][2]['confidence'] * 100.0).toStringAsFixed(2)}% """;
+  }
+
+  setImageURI(File img) {
+    setState(() {
+      imageURI = img;
+    });
+    clearInferenceResults();
   }
 
   clearInferenceResults() {
@@ -206,7 +221,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 decoration: BoxDecoration(
                   color: Colors.blue,
                 ),
-                child: Text('My Paddy Disease App'),
+                child: Text('Reconnaisseur de fruits'),
               ),
               ListTile(
                 title: const Text('About'),
@@ -224,6 +239,17 @@ class _MyHomePageState extends State<MyHomePage> {
                   // ...
                   // Then close the drawer
                   Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('Historique'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            ImageHistoryPage(imageHistory: imageHistory, setImageURI: setImageURI)),
+                  );
                 },
               ),
             ],
@@ -245,15 +271,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       child: EmptyWidget(
                         image: null,
                         packageImage: PackageImage.Image_3,
-                        title: 'No image',
-                        subTitle: 'Select an image',
+                        title: 'Aucune image',
+                        subTitle: 'Sélectionnez une image',
                         titleTextStyle: const TextStyle(
                           fontSize: 15,
                           color: Color(0xff9da9c7),
                           fontWeight: FontWeight.w500,
                         ),
                         subtitleTextStyle: const TextStyle(
-                          fontSize: 14,
+                          fontSize: 13,
                           color: Color(0xffabb8d6),
                         ),
                       ),
@@ -290,6 +316,19 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
               FittedBox(child: buildResultsIndicators(_resultDict)),
+              const SizedBox(height: 8),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    popup(context);
+                  },
+                  child: _resultString != null && _resultString!.isNotEmpty
+                      ? const Text('Afficher toutes les prédictions')
+                      : const Text('Afficher les éléments prédictibles'),
+                ),
+              ),
               const SizedBox(height: 8),
               Text("Latence: $_latency ms",
                   style: Theme.of(context).textTheme.titleLarge),
@@ -353,8 +392,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.blue,
           successColor: Colors.green,
           resetAfterDuration: true,
-          resetDuration: const Duration(seconds: 10),
-          child: const Text('Prédire!', style: TextStyle(color: Colors.white)),
+          resetDuration: const Duration(seconds: 5),
           controller: _btnController,
           onPressed: isClassifying || imageURI == null
               ? null // null value disables the button
@@ -368,20 +406,82 @@ class _MyHomePageState extends State<MyHomePage> {
                   try {
                     Stopwatch stopwatch = Stopwatch()..start();
                     final result = await classifyRiceImage(base64Image);
+                    // Traduction en français
+                    // Parcours de la liste des confidences
+                    for (var i = 0; i < result['confidences'].length; i++) {
+                      result['confidences'][i]['label'] = result['confidences']
+                              [i]['label']
+                          .replaceAll('pineapple', ': Ananas');
+                      result['confidences'][i]['label'] = result['confidences']
+                              [i]['label']
+                          .replaceAll('apple', ': Pomme');
+                      result['confidences'][i]['label'] = result['confidences']
+                              [i]['label']
+                          .replaceAll('banana', ': Banane');
+                      result['confidences'][i]['label'] = result['confidences']
+                              [i]['label']
+                          .replaceAll('kiwi', ': Kiwi');
+                      result['confidences'][i]['label'] = result['confidences']
+                              [i]['label']
+                          .replaceAll('mango', ': Mangue');
+                      result['confidences'][i]['label'] = result['confidences']
+                              [i]['label']
+                          .replaceAll('strawberry', ': Fraise');
+                    }
 
                     setState(() {
                       _resultString = parseResultsIntoString(result);
                       _resultDict = result;
                       _latency = stopwatch.elapsed.inMilliseconds.toString();
                     });
+                    popup(context);
+                    String prediction = result['confidences'][0]['label'];
+                    imageHistory.add(ImagePrediction(
+                        image: imageURI!, prediction: prediction));
                     _btnController.success();
                   } catch (e) {
                     _btnController.error();
                   }
                   isClassifying = false;
                 },
+          child: const Text('Prédire!', style: TextStyle(color: Colors.white)),
         ),
       ),
+    );
+  }
+
+  void popup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: _resultString != null && _resultString!.isNotEmpty
+              ? const Text('Éléments prédis')
+              : const Text('Éléments prédictible'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: _resultString != null && _resultString!.isNotEmpty
+                ? _resultDict['confidences'] != null &&
+                        _resultDict['confidences'].isNotEmpty
+                    ? _resultDict['confidences'].map<Widget>((confidence) {
+                        return Text(
+                          '${confidence['label'].substring(2)} - ${(confidence['confidence'] * 100).toStringAsFixed(2)}%',
+                        );
+                      }).toList()
+                    : [const Text('Aucune prédiction disponible')]
+                : [const Text('Pomme\nBanane\nKiwi\nMangue\nFraise\nAnanas')],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Fermer'),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -434,7 +534,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                             ),
                             padding: const EdgeInsets.symmetric(
-                                vertical: 30.0, horizontal: 20.0)),
+                                vertical: 00.0, horizontal: 20.0)),
                       ),
                     ],
                   )),
@@ -445,7 +545,7 @@ class _MyHomePageState extends State<MyHomePage> {
       options: CarouselOptions(
         height: 180,
         autoPlay: true,
-        // aspectRatio: 2.5,
+        aspectRatio: 2.5,
         viewportFraction: 0.4,
         enlargeCenterPage: false,
         enlargeStrategy: CenterPageEnlargeStrategy.height,
