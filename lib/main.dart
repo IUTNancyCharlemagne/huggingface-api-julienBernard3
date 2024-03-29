@@ -17,7 +17,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'widgets.dart';
 import 'utils.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shimmer/shimmer.dart';
 
 final List<String> listPommes = [
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/apple/Image_1.jpg',
@@ -66,7 +65,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -86,7 +85,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({super.key, required this.title});
 
   final String title;
 
@@ -384,7 +383,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   const Spacer(),
                 ],
               ),
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
             ],
           ),
         ),
@@ -403,7 +402,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   imgBytes = imageURI!.readAsBytesSync();
                   String base64Image =
-                      "data:image/png;base64," + base64Encode(imgBytes!);
+                      "data:image/png;base64,${base64Encode(imgBytes!)}";
 
                   try {
                     Stopwatch stopwatch = Stopwatch()..start();
@@ -484,7 +483,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Fermer'),
+              child: const Text('Fermer'),
             ),
           ],
         );
