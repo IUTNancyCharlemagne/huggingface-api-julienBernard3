@@ -28,7 +28,7 @@ final List<String> listPommes = [
 
 final List<String> listBananes = [
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_1.jpg',
-  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_5.jpg',
+  'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_8.jpg',
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_3.jpg',
   'https://raw.githubusercontent.com/IUTNancyCharlemagne/huggingface-api-julienBernard3/main/sample_images/banana/Image_4.jpg'
 ];
@@ -163,7 +163,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 File croppedFile = await cropImage(pickedFile);
                 final imgFile = File(croppedFile.path);
                 // final imgFile = File(pickedFile.path);
-
                 setState(() {
                   imageURI = imgFile;
                   _btnController.stop();
@@ -247,8 +246,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            ImageHistoryPage(imageHistory: imageHistory, setImageURI: setImageURI)),
+                        builder: (context) => ImageHistoryPage(
+                            imageHistory: imageHistory,
+                            setImageURI: setImageURI)),
                   );
                 },
               ),
@@ -312,11 +312,13 @@ class _MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 8,
               ),
-              Text("Les 3 meilleures prédictions:",
-                  style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: 8),
-              FittedBox(child: buildResultsIndicators(_resultDict)),
-              const SizedBox(height: 8),
+              if (_resultString != null && _resultString!.isNotEmpty) ...[
+                Text("Les 3 meilleures prédictions:",
+                    style: Theme.of(context).textTheme.titleLarge),
+                const SizedBox(height: 8),
+                FittedBox(child: buildResultsIndicators(_resultDict)),
+                const SizedBox(height: 8)
+              ],
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
@@ -330,7 +332,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const SizedBox(height: 8),
-              Text("Latence: $_latency ms",
+              if (_resultString != null && _resultString!.isNotEmpty) Text("Latence: $_latency ms",
                   style: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 8),
               Text("Pommes: ", style: Theme.of(context).textTheme.titleLarge),
@@ -436,8 +438,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     });
                     popup(context);
                     String prediction = result['confidences'][0]['label'];
-                    imageHistory.add(ImagePrediction(
-                        image: imageURI!, prediction: prediction));
+                    // On vérifie qu'il n'y a pas déjà cette prediction dans imageHistory
+                    if (imageHistory
+                        .where((element) => element.image.path == imageURI!.path)
+                        .isEmpty) {
+                      imageHistory.add(ImagePrediction(
+                          image: imageURI!, prediction: prediction));
+                    }
                     _btnController.success();
                   } catch (e) {
                     _btnController.error();
